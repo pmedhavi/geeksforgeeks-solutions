@@ -1,46 +1,57 @@
 //{ Driver Code Starts
 import java.util.*;
-import java.io.*;
+import java.lang.*;
 
-class Node {
+class Node
+{
     int data;
     Node next;
-    
-    public Node(int data){
-        this.data = data;
-        this.next = null;
+    Node(int key)
+    {
+        data = key;
+        next = null;
     }
 }
 
-public class Main {
-    public static void main(String[] args){
-        Scanner sc = new Scanner (System.in);
+
+class nthNode
+{
+    static Node head;
+    public static void main (String[] args) {
+        Scanner sc = new Scanner(System.in);
         int t = sc.nextInt();
         
-        while(t-->0){
-            int n = sc.nextInt();   
-            Node head = new Node(sc.nextInt());
-            Node tail = head;
+        while(t-- > 0)
+        {
+            int n = sc.nextInt();
+            int k = sc.nextInt();
             
-            for(int i=0; i<n-1; i++){
-                tail.next = new Node(sc.nextInt());
-                tail = tail.next;
+            int a1 = sc.nextInt();
+            Node head = new Node(a1);
+            addToTheLast(head);
+            for(int i = 1; i < n; i++)
+            {
+                int a = sc.nextInt();
+                addToTheLast(new Node(a));
             }
-            int key = sc.nextInt();
             
-            //display(head);
-            Solution obj = new Solution();
-            obj.insertInMid(head, key);
-            display(head);
-            System.out.println();
+           GfG gfg = new GfG();
+           System.out.println(gfg.getNth(head, k));
         }
     }
     
-    public static void display(Node head){
-        Node curr = head;
-        while(curr != null){
-            System.out.print(curr.data+" ");
-            curr = curr.next;
+    public static void addToTheLast(Node node)
+    {
+        if(head == null)
+        {
+            head = node;
+        }
+        else
+        {
+            Node temp = head;
+            while(temp.next != null)
+                temp = temp.next;
+                temp.next = node;
         }
     }
 }
@@ -48,42 +59,28 @@ public class Main {
 // } Driver Code Ends
 
 
-/*
-Structure of node class is:
-class Node {
+/*node class of the linked list
+class Node
+{
     int data;
     Node next;
-    
-    public Node(int data){
-        this.data = data;
-        this.next = null;
+    Node(int key)
+    {
+        data = key;
+        next = null;
     }
 }
 */
-class Solution {
-    
-    public Node insertInMid(Node head, int data){
-        //Insert code here, return the head of modified linked list
-        int size=0;
-        Node temp=head;
-        while(temp!=null){
-            temp=temp.next;
-            size++;
-        }
-        int middle=0;
-        if(size%2==0){
-            middle=size/2-1;
-        }
-        else{
-            middle=size/2;
-        }
-        Node temp1=new Node(data);
-        Node newCurr=head;
-        for(int i=0;i<middle&&newCurr!=null;i++){
-            newCurr=newCurr.next;
-        }
-        temp1.next=newCurr.next;
-        newCurr.next=temp1;
-        return head;
+class GfG
+{
+   
+    public static int getNth(Node node, int ind)
+    {
+       //Your code here
+       Node temp=node;
+       for(int i=1;i<ind;i++){
+           temp=temp.next;
+       }
+       return temp.data;
     }
 }
